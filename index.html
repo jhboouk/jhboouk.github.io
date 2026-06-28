@@ -1,0 +1,472 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="jhboouk portfolio" />
+  <meta property="og:title" content="jhboouk — Portfolio" />
+  <meta property="og:description" content="A clean personal portfolio page." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://jhboouk.github.io/" />
+  <title>jhboouk — Portfolio</title>
+  <style>
+    :root {
+      --bg: #f5f5f7;
+      --ink: #1d1d1f;
+      --muted: rgba(0, 0, 0, 0.62);
+      --line: rgba(0, 0, 0, 0.10);
+      --card: #ffffff;
+      --dark: #000000;
+      --dark-card: #171719;
+      --blue: #0071e3;
+      --blue-dark: #0066cc;
+      --shadow: rgba(0, 0, 0, 0.12) 0 24px 70px;
+      --radius: 28px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      letter-spacing: -0.374px;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    .nav {
+      position: fixed;
+      inset: 0 0 auto 0;
+      z-index: 50;
+      height: 52px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0, 0, 0, 0.78);
+      backdrop-filter: saturate(180%) blur(20px);
+      -webkit-backdrop-filter: saturate(180%) blur(20px);
+    }
+    .nav-inner {
+      width: min(980px, calc(100% - 32px));
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      color: rgba(255, 255, 255, 0.88);
+      font-size: 12px;
+      letter-spacing: -0.12px;
+    }
+    .brand { font-weight: 700; }
+    .nav-links { display: flex; gap: 24px; align-items: center; }
+    .nav-links a { opacity: 0.82; transition: opacity .2s ease; }
+    .nav-links a:hover { opacity: 1; }
+
+    .hero {
+      min-height: 100vh;
+      padding: 126px 22px 72px;
+      display: grid;
+      place-items: center;
+      background: #000;
+      color: #fff;
+      overflow: hidden;
+      position: relative;
+    }
+    .hero::before {
+      content: "";
+      position: absolute;
+      width: 620px;
+      height: 620px;
+      border-radius: 999px;
+      background: radial-gradient(circle, rgba(0, 113, 227, .34), rgba(0, 113, 227, 0) 62%);
+      top: 8%;
+      right: -180px;
+      filter: blur(4px);
+    }
+    .hero::after {
+      content: "";
+      position: absolute;
+      width: 480px;
+      height: 480px;
+      border-radius: 999px;
+      background: radial-gradient(circle, rgba(255, 255, 255, .14), rgba(255, 255, 255, 0) 64%);
+      bottom: -180px;
+      left: -120px;
+    }
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      width: min(980px, 100%);
+      text-align: center;
+    }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 14px;
+      border: 1px solid rgba(255,255,255,.18);
+      border-radius: 999px;
+      background: rgba(255,255,255,.08);
+      color: rgba(255,255,255,.82);
+      font-size: 13px;
+      margin-bottom: 28px;
+    }
+    .dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: #34c759;
+      box-shadow: 0 0 0 5px rgba(52,199,89,.16);
+    }
+    h1 {
+      margin: 0 auto;
+      max-width: 900px;
+      font-size: clamp(48px, 8vw, 96px);
+      line-height: .96;
+      letter-spacing: -4px;
+      font-weight: 700;
+    }
+    .hero p {
+      margin: 26px auto 0;
+      max-width: 720px;
+      color: rgba(255,255,255,.74);
+      font-size: clamp(19px, 2.4vw, 28px);
+      line-height: 1.28;
+      letter-spacing: -0.8px;
+    }
+    .cta-row {
+      margin-top: 38px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 14px;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 44px;
+      padding: 12px 20px;
+      border-radius: 999px;
+      font-size: 16px;
+      transition: transform .2s ease, background .2s ease, border-color .2s ease;
+    }
+    .btn:hover { transform: translateY(-1px); }
+    .btn.primary { background: var(--blue); color: #fff; }
+    .btn.secondary { border: 1px solid rgba(255,255,255,.42); color: #fff; }
+
+    section { padding: 96px 22px; }
+    .container { width: min(1100px, 100%); margin: 0 auto; }
+    .section-head { margin-bottom: 34px; }
+    .section-kicker {
+      color: var(--blue-dark);
+      font-weight: 700;
+      font-size: 14px;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+    }
+    h2 {
+      margin: 10px 0 0;
+      font-size: clamp(34px, 5vw, 64px);
+      line-height: 1.02;
+      letter-spacing: -2.4px;
+    }
+    .lead {
+      margin: 18px 0 0;
+      max-width: 760px;
+      color: var(--muted);
+      font-size: 20px;
+      line-height: 1.55;
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1.15fr .85fr;
+      gap: 22px;
+      align-items: stretch;
+    }
+    .panel {
+      background: var(--card);
+      border-radius: var(--radius);
+      padding: clamp(26px, 4vw, 42px);
+      box-shadow: var(--shadow);
+    }
+    .profile-card {
+      background: linear-gradient(160deg, #111, #272729);
+      color: #fff;
+      min-height: 360px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      overflow: hidden;
+      position: relative;
+    }
+    .profile-card::before {
+      content: "J";
+      position: absolute;
+      right: -12px;
+      bottom: -54px;
+      font-size: 250px;
+      font-weight: 800;
+      letter-spacing: -16px;
+      color: rgba(255,255,255,.08);
+    }
+    .avatar {
+      width: 86px;
+      height: 86px;
+      border-radius: 28px;
+      display: grid;
+      place-items: center;
+      background: #fff;
+      color: #111;
+      font-size: 38px;
+      font-weight: 800;
+      box-shadow: rgba(0,0,0,.24) 0 20px 44px;
+    }
+    .profile-card h3 { margin: 24px 0 8px; font-size: 30px; letter-spacing: -1px; }
+    .profile-card p { margin: 0; color: rgba(255,255,255,.72); line-height: 1.5; }
+
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 26px;
+    }
+    .tag {
+      padding: 9px 13px;
+      border-radius: 999px;
+      background: #f5f5f7;
+      color: rgba(0,0,0,.72);
+      font-size: 14px;
+    }
+
+    .work-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+    .work-card {
+      min-height: 360px;
+      border-radius: var(--radius);
+      background: #fff;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      display: flex;
+      flex-direction: column;
+    }
+    .work-visual {
+      height: 170px;
+      background: #000;
+      position: relative;
+      overflow: hidden;
+    }
+    .work-visual.one { background: radial-gradient(circle at 70% 20%, #8ec5ff, transparent 38%), linear-gradient(135deg, #000, #202124); }
+    .work-visual.two { background: radial-gradient(circle at 30% 30%, #fff1a8, transparent 40%), linear-gradient(135deg, #1d1d1f, #4b5563); }
+    .work-visual.three { background: radial-gradient(circle at 45% 20%, #ffc7dc, transparent 36%), linear-gradient(135deg, #000, #2a2a2d); }
+    .device {
+      position: absolute;
+      left: 50%;
+      bottom: -34px;
+      transform: translateX(-50%);
+      width: 72%;
+      height: 136px;
+      border-radius: 22px 22px 0 0;
+      background: rgba(255,255,255,.88);
+      border: 1px solid rgba(255,255,255,.44);
+      box-shadow: rgba(0,0,0,.24) 0 18px 50px;
+    }
+    .work-body { padding: 24px; flex: 1; display: flex; flex-direction: column; }
+    .work-body h3 { margin: 0; font-size: 24px; letter-spacing: -0.8px; }
+    .work-body p { margin: 12px 0 0; color: var(--muted); line-height: 1.55; }
+    .work-meta { margin-top: auto; padding-top: 26px; color: var(--blue-dark); font-size: 14px; font-weight: 650; }
+
+    .dark-section {
+      background: #000;
+      color: #fff;
+    }
+    .dark-section .section-kicker { color: #2997ff; }
+    .dark-section .lead { color: rgba(255,255,255,.68); }
+    .services {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+      margin-top: 34px;
+    }
+    .service {
+      background: var(--dark-card);
+      border-radius: 22px;
+      padding: 24px;
+      min-height: 180px;
+      border: 1px solid rgba(255,255,255,.08);
+    }
+    .service .num { color: #2997ff; font-size: 13px; font-weight: 800; }
+    .service h3 { margin: 18px 0 10px; font-size: 20px; letter-spacing: -0.6px; }
+    .service p { margin: 0; color: rgba(255,255,255,.64); line-height: 1.5; font-size: 15px; }
+
+    .contact-card {
+      background: #fff;
+      border-radius: 34px;
+      padding: clamp(34px, 6vw, 68px);
+      text-align: center;
+      box-shadow: var(--shadow);
+    }
+    .contact-card h2 { margin-top: 0; }
+    .contact-card p { margin: 18px auto 0; max-width: 640px; color: var(--muted); font-size: 20px; line-height: 1.5; }
+    .contact-actions { margin-top: 30px; display: flex; justify-content: center; flex-wrap: wrap; gap: 12px; }
+    .contact-actions .btn.secondary { color: var(--ink); border-color: var(--line); background: #f5f5f7; }
+
+    footer {
+      padding: 34px 22px 50px;
+      color: rgba(0,0,0,.48);
+      font-size: 13px;
+      text-align: center;
+    }
+
+    @media (max-width: 860px) {
+      .nav-links { gap: 14px; }
+      .about-grid, .work-grid, .services { grid-template-columns: 1fr; }
+      .services { gap: 12px; }
+      h1 { letter-spacing: -2.4px; }
+      h2 { letter-spacing: -1.6px; }
+      section { padding: 72px 18px; }
+    }
+    @media (max-width: 560px) {
+      .nav-inner { width: calc(100% - 24px); }
+      .nav-links a:nth-child(2), .nav-links a:nth-child(3) { display: none; }
+      .hero { padding-top: 110px; }
+      .btn { width: 100%; }
+      .cta-row, .contact-actions { width: min(340px, 100%); margin-left: auto; margin-right: auto; }
+      .panel, .contact-card { border-radius: 24px; }
+    }
+  </style>
+</head>
+<body>
+  <nav class="nav" aria-label="Primary navigation">
+    <div class="nav-inner">
+      <a class="brand" href="#top">jhboouk</a>
+      <div class="nav-links">
+        <a href="#about">About</a>
+        <a href="#work">Work</a>
+        <a href="#services">Focus</a>
+        <a href="#contact">Contact</a>
+      </div>
+    </div>
+  </nav>
+
+  <main id="top">
+    <section class="hero">
+      <div class="hero-content">
+        <div class="eyebrow"><span class="dot"></span> Portfolio page is live</div>
+        <h1>Quietly polished work, clearly presented.</h1>
+        <p>jhboouk의 작업과 이야기를 소개하는 개인 포트폴리오입니다. 프로젝트, 강점, 연락처를 한눈에 볼 수 있도록 정리했습니다.</p>
+        <div class="cta-row">
+          <a class="btn primary" href="#work">View work</a>
+          <a class="btn secondary" href="#contact">Get in touch</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="about">
+      <div class="container">
+        <div class="section-head">
+          <div class="section-kicker">About</div>
+          <h2>Simple, thoughtful, and memorable.</h2>
+          <p class="lead">아직 실제 소개 문구와 프로젝트 정보를 받기 전이라, 바로 교체하기 쉬운 형태의 포트폴리오 골격으로 구성했습니다.</p>
+        </div>
+        <div class="about-grid">
+          <article class="panel">
+            <h3 style="margin:0;font-size:28px;letter-spacing:-1px;">Profile</h3>
+            <p style="margin:16px 0 0;color:var(--muted);font-size:18px;line-height:1.65;">감각적인 결과물, 명확한 커뮤니케이션, 차분한 완성도를 중심으로 작업을 소개하는 공간입니다. 실제 경력/전공/프로젝트 문구를 주시면 이 영역을 바로 맞춤형으로 바꿀 수 있습니다.</p>
+            <div class="tags">
+              <span class="tag">Portfolio</span>
+              <span class="tag">Creative Work</span>
+              <span class="tag">Personal Brand</span>
+              <span class="tag">Projects</span>
+            </div>
+          </article>
+          <aside class="panel profile-card">
+            <div>
+              <div class="avatar">J</div>
+              <h3>jhboouk</h3>
+              <p>Personal portfolio<br />Based in Korea</p>
+            </div>
+            <p style="position:relative;z-index:1;">Available for selected collaborations.</p>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <section id="work">
+      <div class="container">
+        <div class="section-head">
+          <div class="section-kicker">Selected Work</div>
+          <h2>Featured projects.</h2>
+          <p class="lead">실제 프로젝트 이미지와 설명이 들어가면 완성도가 확 올라가도록 카드형 섹션을 준비했습니다.</p>
+        </div>
+        <div class="work-grid">
+          <article class="work-card">
+            <div class="work-visual one"><div class="device"></div></div>
+            <div class="work-body">
+              <h3>Project One</h3>
+              <p>대표 프로젝트 설명을 넣는 영역입니다. 목표, 역할, 결과를 2~3문장으로 정리하면 좋습니다.</p>
+              <div class="work-meta">Case study →</div>
+            </div>
+          </article>
+          <article class="work-card">
+            <div class="work-visual two"><div class="device"></div></div>
+            <div class="work-body">
+              <h3>Project Two</h3>
+              <p>포트폴리오의 두 번째 작업입니다. 작업 과정이나 사용한 도구, 기여도를 간결하게 보여줍니다.</p>
+              <div class="work-meta">Details →</div>
+            </div>
+          </article>
+          <article class="work-card">
+            <div class="work-visual three"><div class="device"></div></div>
+            <div class="work-body">
+              <h3>Project Three</h3>
+              <p>작업 이미지나 링크가 생기면 이 카드 전체를 실제 프로젝트 페이지로 연결할 수 있습니다.</p>
+              <div class="work-meta">Explore →</div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="services" class="dark-section">
+      <div class="container">
+        <div class="section-head">
+          <div class="section-kicker">Focus</div>
+          <h2>What this page can show.</h2>
+          <p class="lead">포트폴리오에 자주 필요한 핵심 정보를 네 가지 축으로 정리했습니다.</p>
+        </div>
+        <div class="services">
+          <article class="service"><div class="num">01</div><h3>Identity</h3><p>이름, 한 줄 소개, 관심 분야를 명확하게 전달합니다.</p></article>
+          <article class="service"><div class="num">02</div><h3>Projects</h3><p>대표 작업을 카드와 케이스 스터디 형태로 보여줍니다.</p></article>
+          <article class="service"><div class="num">03</div><h3>Experience</h3><p>경력, 학력, 수상, 활동 내역을 추가할 수 있습니다.</p></article>
+          <article class="service"><div class="num">04</div><h3>Contact</h3><p>이메일, 인스타그램, 깃허브 등 연락 채널로 연결합니다.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="container">
+        <div class="contact-card">
+          <div class="section-kicker">Contact</div>
+          <h2>Let’s make it personal.</h2>
+          <p>실제 이름, 소개 문장, 프로젝트, 연락처를 주시면 이 임시 문구들을 모두 맞춤형 포트폴리오 콘텐츠로 교체하겠습니다.</p>
+          <div class="contact-actions">
+            <a class="btn primary" href="mailto:hello@example.com">Email</a>
+            <a class="btn secondary" href="https://github.com/jhboouk" target="_blank" rel="noreferrer">GitHub</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>© <span id="year"></span> jhboouk. Built with GitHub Pages.</footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
